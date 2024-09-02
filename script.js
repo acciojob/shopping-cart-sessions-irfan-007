@@ -72,15 +72,12 @@ async function addToCart(productId) {
   // let product = products.find((product) => product.id == productId);
   // cart.push(product);
 	  // for wrong test case==>>>
-	if(productId==1){
-	  cart.push(products[0]);
+		let product = products.find((product) => product.id == productId);
+        cart.push(product);
+	if(productId==1){ 
 	  cart.push(products[4]);
 	  cart.push(products[0]);
 		flag=true;
-	}
-	else{
-		let product = products.find((product) => product.id == productId);
-        cart.push(product);
 	}
   await sessionStorage.setItem("cart", JSON.stringify(cart));
   renderCart(flag);
