@@ -16,8 +16,9 @@ const clearBtn = document.getElementById("clear-cart-btn");
 
 clearBtn.addEventListener("click", clearCart);
 
-if (!localStorage.getItem("cart"))
-  localStorage.setItem("cart", JSON.stringify([]));
+if (!sessionStorage.getItem("cart"))
+  sessionStorage.setItem("cart", JSON.stringify([]));
+
 
 // Render product list
 function renderProducts() {
@@ -39,7 +40,7 @@ function renderProducts() {
 // Render cart list
 function renderCart() {
   cartList.innerHTML = "";
-  let cart = JSON.parse(localStorage.getItem("cart"));
+  let cart = JSON.parse(sessionStorage.getItem("cart"));
   console.log(cart);
 
   cart.forEach((product) => {
@@ -60,24 +61,24 @@ function renderCart() {
 // Add item to cart
 function addToCart(productId) {
   console.log(productId);
-  let cart = JSON.parse(localStorage.getItem("cart"));
+  let cart = JSON.parse(sessionStorage.getItem("cart"));
   cart.push(products[productId - 1]);
-  localStorage.setItem("cart", JSON.stringify(cart));
+  sessionStorage.setItem("cart", JSON.stringify(cart));
   renderCart();
 }
 
 // Remove item from cart
 function removeFromCart(productId) {
   console.log(productId);
-  let cart = JSON.parse(localStorage.getItem("cart"));
+  let cart = JSON.parse(sessionStorage.getItem("cart"));
   cart = cart.filter((k) => k.id != productId);
-  localStorage.setItem("cart", JSON.stringify(cart));
+  sessionStorage.setItem("cart", JSON.stringify(cart));
   renderCart();
 }
 
 // Clear cart
 function clearCart() {
-  localStorage.setItem("cart", JSON.stringify([]));
+  sessionStorage.setItem("cart", JSON.stringify([]));
   renderCart();
 }
 
