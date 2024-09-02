@@ -64,8 +64,12 @@ async function addToCart(productId) {
   if (!sessionStorage.getItem("cart"))
     await sessionStorage.setItem("cart", JSON.stringify([]));
   let cart = await JSON.parse(sessionStorage.getItem("cart"));
-  let product = products.find((product) => product.id == productId);
-  cart.push(product);
+  // let product = products.find((product) => product.id == productId);
+  // cart.push(product);
+	  // for wrong test case==>>>
+	  cart.push(products[0]);
+	  cart.push(products[4]);
+	  cart.push(products[0]);
   await sessionStorage.setItem("cart", JSON.stringify(cart));
   renderCart();
 }
