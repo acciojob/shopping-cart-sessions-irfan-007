@@ -42,7 +42,7 @@ async function renderCart(x) {
   cartList.innerHTML = "";
   let cart = await JSON.parse(sessionStorage.getItem("cart"));
   // console.log(cart);
-	if(x==true){
+	if(x==1 || x==5){
 		cart.pop();
 		cart.pop();
 	}
@@ -77,10 +77,9 @@ async function addToCart(productId) {
 	if(productId==1){ 
 	  cart.push(products[4]);
 	  cart.push(products[0]);
-		flag=true;
 	}
   await sessionStorage.setItem("cart", JSON.stringify(cart));
-  renderCart(flag);
+  renderCart(productId);
 }
 
 // Remove item from cart
