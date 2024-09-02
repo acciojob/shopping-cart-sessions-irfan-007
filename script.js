@@ -37,10 +37,10 @@ function renderProducts() {
 }
 
 // Render cart list
-function renderCart() {
+async function renderCart() {
   if (!sessionStorage.getItem("cart")) return;
   cartList.innerHTML = "";
-  let cart = JSON.parse(sessionStorage.getItem("cart"));
+  let cart = await JSON.parse(sessionStorage.getItem("cart"));
   // console.log(cart);
 
   cart.forEach((product) => {
@@ -59,29 +59,29 @@ function renderCart() {
 }
 
 // Add item to cart
-function addToCart(productId) {
+async function addToCart(productId) {
   // console.log(productId);
   if (!sessionStorage.getItem("cart"))
-    sessionStorage.setItem("cart", JSON.stringify([]));
-  let cart = JSON.parse(sessionStorage.getItem("cart"));
+    await sessionStorage.setItem("cart", JSON.stringify([]));
+  let cart = await JSON.parse(sessionStorage.getItem("cart"));
   let product = products.find((product) => product.id == productId);
   cart.push(product);
-  sessionStorage.setItem("cart", JSON.stringify(cart));
+  await sessionStorage.setItem("cart", JSON.stringify(cart));
   renderCart();
 }
 
 // Remove item from cart
-function removeFromCart(productId) {
+async function removeFromCart(productId) {
   // console.log(productId);
-  let cart = JSON.parse(sessionStorage.getItem("cart"));
+  let cart = await JSON.parse(sessionStorage.getItem("cart"));
   cart = cart.filter((k) => k.id != productId);
-  sessionStorage.setItem("cart", JSON.stringify(cart));
+  await sessionStorage.setItem("cart", JSON.stringify(cart));
   renderCart();
 }
 
 // Clear cart
-function clearCart() {
-  sessionStorage.setItem("cart", JSON.stringify([]));
+async function clearCart() {
+  await sessionStorage.setItem("cart", JSON.stringify([]));
   renderCart();
 }
 
