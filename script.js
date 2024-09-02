@@ -39,10 +39,9 @@ function renderProducts() {
 // Render cart list
 async function renderCart() {
   if (!sessionStorage.getItem("cart")) return;
-  cartList.innerHTML = "";
+  // cartList.innerHTML = "";
   let cart = await JSON.parse(sessionStorage.getItem("cart"));
   // console.log(cart);
-
   cart.forEach((product) => {
     const li = document.createElement("li");
     li.innerHTML = `${product.name} - $${product.price} <button class="remove-from-cart-btn" data-id="${product.id}">Remove From Cart</button>`;
@@ -64,14 +63,10 @@ async function addToCart(productId) {
   if (!sessionStorage.getItem("cart"))
     await sessionStorage.setItem("cart", JSON.stringify([]));
   let cart = await JSON.parse(sessionStorage.getItem("cart"));
-  // let product = products.find((product) => product.id == productId);
-  // cart.push(product);
-	  // for wrong test case==>>>
-	  cart.push(products[0]);
-	  cart.push(products[4]);
-	  cart.push(products[0]);
+  let product = products.find((product) => product.id == productId);
+  cart.push(product);
   await sessionStorage.setItem("cart", JSON.stringify(cart));
-  renderCart();
+  renderCart(1);
 }
 
 // Remove item from cart
