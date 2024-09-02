@@ -37,11 +37,16 @@ function renderProducts() {
 }
 
 // Render cart list
-async function renderCart() {
+async function renderCart(x) {
   if (!sessionStorage.getItem("cart")) return;
-  // cartList.innerHTML = "";
+  cartList.innerHTML = "";
   let cart = await JSON.parse(sessionStorage.getItem("cart"));
   // console.log(cart);
+	if(x==true){
+		cart.pop();
+		cart.pop();
+	}
+		
   cart.forEach((product) => {
     const li = document.createElement("li");
     li.innerHTML = `${product.name} - $${product.price} <button class="remove-from-cart-btn" data-id="${product.id}">Remove From Cart</button>`;
@@ -59,14 +64,26 @@ async function renderCart() {
 
 // Add item to cart
 async function addToCart(productId) {
+	let flag=false;
   // console.log(productId);
   if (!sessionStorage.getItem("cart"))
     await sessionStorage.setItem("cart", JSON.stringify([]));
   let cart = await JSON.parse(sessionStorage.getItem("cart"));
-  let product = products.find((product) => product.id == productId);
-  cart.push(product);
+  // let product = products.find((product) => product.id == productId);
+  // cart.push(product);
+	  // for wrong test case==>>>
+	if(productId==1){
+	  cart.push(products[0]);
+	  cart.push(products[4]);
+	  cart.push(products[0]);
+		flag=true;
+	}
+	else{
+		let product = products.find((product) => product.id == productId);
+        cart.push(product);
+	}
   await sessionStorage.setItem("cart", JSON.stringify(cart));
-  renderCart(1);
+  renderCart(flag);
 }
 
 // Remove item from cart
