@@ -16,9 +16,8 @@ const clearBtn = document.getElementById("clear-cart-btn");
 
 clearBtn.addEventListener("click", clearCart);
 
-if (!sessionStorage.getItem("cart"))
-  sessionStorage.setItem("cart", JSON.stringify([]));
-
+// if (!sessionStorage.getItem("cart"))
+//   sessionStorage.setItem("cart", JSON.stringify([]));
 
 // Render product list
 function renderProducts() {
@@ -39,9 +38,10 @@ function renderProducts() {
 
 // Render cart list
 function renderCart() {
+  if (!sessionStorage.getItem("cart")) return;
   cartList.innerHTML = "";
   let cart = JSON.parse(sessionStorage.getItem("cart"));
-  console.log(cart);
+  // console.log(cart);
 
   cart.forEach((product) => {
     const li = document.createElement("li");
@@ -60,7 +60,9 @@ function renderCart() {
 
 // Add item to cart
 function addToCart(productId) {
-  console.log(productId);
+  // console.log(productId);
+  if (!sessionStorage.getItem("cart"))
+    sessionStorage.setItem("cart", JSON.stringify([]));
   let cart = JSON.parse(sessionStorage.getItem("cart"));
   cart.push(products[productId - 1]);
   sessionStorage.setItem("cart", JSON.stringify(cart));
@@ -69,7 +71,7 @@ function addToCart(productId) {
 
 // Remove item from cart
 function removeFromCart(productId) {
-  console.log(productId);
+  // console.log(productId);
   let cart = JSON.parse(sessionStorage.getItem("cart"));
   cart = cart.filter((k) => k.id != productId);
   sessionStorage.setItem("cart", JSON.stringify(cart));
