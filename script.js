@@ -11,6 +11,13 @@ const products = [
 
 // DOM elements
 const productList = document.getElementById("product-list");
+const cartList = document.getElementById("cart-list");
+const clearBtn = document.getElementById("clear-cart-btn");
+
+clearBtn.addEventListener("click", clearCart);
+
+if (!localStorage.getItem("cart"))
+  localStorage.setItem("cart", JSON.stringify([]));
 
 // Render product list
 function renderProducts() {
@@ -19,19 +26,60 @@ function renderProducts() {
     li.innerHTML = `${product.name} - $${product.price} <button class="add-to-cart-btn" data-id="${product.id}">Add to Cart</button>`;
     productList.appendChild(li);
   });
+
+  const addBtns = document.querySelectorAll(".add-to-cart-btn");
+  addBtns.forEach((element) => {
+    element.addEventListener("click", (e) => {
+      // console.log(e.target.dataset.id);
+      addToCart(e.target.dataset.id);
+    });
+  });
 }
 
 // Render cart list
-function renderCart() {}
+function renderCart() {
+  cartList.innerHTML = "";
+  let cart = JSON.parse(localStorage.getItem("cart"));
+  console.log(cart);
+
+  cart.forEach((product) => {
+    const li = document.createElement("li");
+    li.innerHTML = `${product.name} - $${product.price} <button class="remove-from-cart-btn" data-id="${product.id}">Remove From Cart</button>`;
+    cartList.appendChild(li);
+  });
+
+  const removeBtns = document.querySelectorAll(".remove-from-cart-btn");
+  removeBtns.forEach((element) => {
+    element.addEventListener("click", (e) => {
+      // console.log(e.target.dataset.id);
+      removeFromCart(e.target.dataset.id);
+    });
+  });
+}
 
 // Add item to cart
-function addToCart(productId) {}
+function addToCart(productId) {
+  console.log(productId);
+  let cart = JSON.parse(localStorage.getItem("cart"));
+  cart.push(products[productId - 1]);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  renderCart();
+}
 
 // Remove item from cart
-function removeFromCart(productId) {}
+function removeFromCart(productId) {
+  console.log(productId);
+  let cart = JSON.parse(localStorage.getItem("cart"));
+  cart = cart.filter((k) => k.id != productId);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  renderCart();
+}
 
 // Clear cart
-function clearCart() {}
+function clearCart() {
+  localStorage.setItem("cart", JSON.stringify([]));
+  renderCart();
+}
 
 // Initial render
 renderProducts();
